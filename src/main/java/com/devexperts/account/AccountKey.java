@@ -8,7 +8,8 @@ package com.devexperts.account;
  * as we might add human-readable account representation and some clearing codes for partners.
  * */
 public class AccountKey {
-    private final long accountId;
+
+	private final long accountId;
 
     private AccountKey(long accountId) {
         this.accountId = accountId;
@@ -17,4 +18,8 @@ public class AccountKey {
     public static AccountKey valueOf(long accountId) {
         return new AccountKey(accountId);
     }
+    
+   public long getAccountId() {
+	   return this.accountId;
+   }
 }

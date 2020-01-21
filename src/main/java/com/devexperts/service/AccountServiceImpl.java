@@ -5,12 +5,25 @@ import com.devexperts.account.AccountKey;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    private final List<Account> accounts = new ArrayList<>();
+	/*
+	 * An ArrayList uses an array which is an immutable data structure, meaning any change (delete or create an element) 
+	 * involves recreating a new array and searching for this use case would be O(n)
+	 * 
+	 * Using a HashMap makes searching, inserting and delete operation  O(1) which is more faster than O(n)
+	 * 
+	 */
+    
+    Map<Long, Account> accounts = new HashMap<>();
 
     @Override
     public void clear() {
@@ -19,15 +32,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void createAccount(Account account) {
-        accounts.add(account);
+        accounts.put((Long) account.getAccountKey().getAccountId(), account);
     }
 
     @Override
     public Account getAccount(long id) {
-        return accounts.stream()
-                .filter(account -> account.getAccountKey() == AccountKey.valueOf(id))
-                .findAny()
-                .orElse(null);
+    	
+    	return accounts.get((Long) id);
     }
 
     @Override
