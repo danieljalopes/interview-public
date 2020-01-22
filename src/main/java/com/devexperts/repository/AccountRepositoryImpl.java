@@ -26,5 +26,8 @@ public class AccountRepositoryImpl  implements AccountRepository{
 	public Account getById(long id) {
 		return accounts.get(Long.valueOf(id));
 	}
-
+	
+	public Account create(Account account) {
+      return accounts.put(account.getAccountKey().getAccountId(), account);
+	}
 }
