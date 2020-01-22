@@ -48,7 +48,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public void createAccount(Account account) {
-		accounts.put((Long) account.getAccountKey().getAccountId(), account);
+		accountRepository.create(account);
 	}
 
 	@Override

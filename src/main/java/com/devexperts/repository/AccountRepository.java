@@ -7,4 +7,6 @@ public interface AccountRepository {
 	public void clear();
 	
 	public Account getById(long id);
+	
+	public Account create(Account account);
 }
