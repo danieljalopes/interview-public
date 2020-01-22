@@ -13,6 +13,7 @@ public class AccountKey {
     private AccountKey(long accountId) {
         this.accountId = accountId;
     }
+    
 
     public static AccountKey valueOf(long accountId) {
         return new AccountKey(accountId);
