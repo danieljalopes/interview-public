@@ -1,6 +1,8 @@
 package com.devexperts.service;
 
 import com.devexperts.account.Account;
+import com.devexperts.service.exception.InvalidAmmountException;
+import com.devexperts.service.exception.NoAccountException;
 
 public interface AccountService {
 
@@ -33,5 +35,5 @@ public interface AccountService {
      * @param target account to transfer money to
      * @param amount dollar amount to transfer
      * */
-    void transfer(Account source, Account target, double amount);
+    void transfer(Account source, Account target, double amount) throws NoAccountException, InvalidAmmountException ;
 }

@@ -1,9 +1,11 @@
 package com.devexperts.service;
 
 import com.devexperts.account.Account;
-import com.devexperts.account.AccountKey;
 import com.devexperts.repository.AccountRepository;
 import com.devexperts.repository.AccountRepositoryImpl;
+import com.devexperts.service.exception.InvalidAmmountException;
+import com.devexperts.service.exception.NoAccountException;
+import com.devexperts.service.usecase.TransfersBetweenAccountsUseCase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,14 +18,19 @@ public class AccountServiceImpl implements AccountService {
 	
 
 	private AccountRepository accountRepository;
+	
+	private TransfersBetweenAccountsUseCase transfersBetweenAccountsUseCase;
 
 	public AccountServiceImpl() {
 		this.accountRepository = new AccountRepositoryImpl();
 	}
 
 	@Autowired
-	public AccountServiceImpl(AccountRepository accountRepository) {
+	public AccountServiceImpl(AccountRepository accountRepository, TransfersBetweenAccountsUseCase transfersBetweenAccountsUseCase) {
 		this.accountRepository = accountRepository;
+		
+		this.transfersBetweenAccountsUseCase = transfersBetweenAccountsUseCase;
+		this.transfersBetweenAccountsUseCase.setAccountRepository(this.accountRepository);
 	}
 
 	@Override
@@ -44,7 +51,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public void transfer(Account source, Account target, double amount) {
-		// do nothing for now
+	public void transfer(Account source, Account target, double amount) throws NoAccountException, InvalidAmmountException {
+		this.transfersBetweenAccountsUseCase.transferAmmount(source, target, amount);
 	}
 }
